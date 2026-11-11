@@ -415,6 +415,268 @@ WHERE TransactionType IN ('Deposit','Withdrawal')
 ORDER BY TransactionDate DESC;
 
 
+-- String Functions
+-- Math Functions
+-- Date Functions
+
+-- 1)String Functions
+
+-- These functions help clean and format text values.
+
+-- Display customer Table
+
+select * from customers;
+
+-- Display all customer FirstName in uppercase.
+
+SELECT FirstName,
+UPPER(FirstName) AS UpperCaseName
+FROM customers;
+
+-- Display all customer FirstName in lowercase.
+
+SELECT 
+    firstname, LOWER(firstname) AS UpperCaseName
+FROM
+    customers;
+    
+-- Find the total number of characters in each customer FirstName. 
+
+SELECT 
+    firstname, LENGTH(firstname) AS NameLength
+FROM
+    customers;
+    
+    
+-- Display only the first three characters of customer FirstName .
+
+SELECT 
+    Firstname, LEFT(Firstname, 3) AS Initials
+FROM
+    customers;
+    
+ -- Combine customer's FirstName with LastName.
+ 
+ select concat(FirstName,'-',LastName) as Fullname from customers;
+ 
+ 
+ -- 2) Math Functions
+ -- These functions perform financial calculations.
+
+-- ROUND()
+
+-- Purpose: Rounds a decimal number to the nearest whole number.
+-- Syntax & Example
+-- ROUND(number)
+
+SELECT ROUND(1256.78) AS Rounded_Value;
+
+
+-- CEIL()
+-- Purpose: Returns the smallest integer greater than or equal to a number
+-- syntax & Example
+-- CEIL(number)
+SELECT CEIL(1256.25) AS Ceiling_Value;
+
+-- FLOOR()
+-- Purpose: Returns the largest integer less than or equal to a number.
+-- Syntax & Example
+-- FLOOR(number)
+
+SELECT FLOOR(1256.79) AS Floor_Value;
+
+-- ABS()
+-- Purpose: Returns the absolute (positive) value of a number.
+-- Syntax & Example
+-- ABS(number)
+select abs(-2500) as Absolute_Value;
+
+-- MOD()
+-- Purpose: Returns the remainder after dividing one number by another.
+-- Syntax & Example
+-- MOD(dividend, divisor)
+SELECT MOD(25,4) AS Remainder;
+
+
+-- 3)Date Functions
+-- These functions analyze dates and time
+-- Display customer Table
+select * from customers;
+
+-- Display the current system date.
+select curdate();
+
+-- Display the current system date and time.
+select now();
+
+-- Display the Birth of year
+SELECT CustomerID,
+YEAR(DateOfBirth) AS BirthYear
+FROM customers;
+
+-- Display the Birth month.
+SELECT CustomerID,
+MONTH(DateOfBirth) AS BirthMonth
+FROM customers;
+
+-- Calculate the number of days since BirthDate.
+
+SELECT
+CustomerID,
+DATEDIFF(CURDATE(),DateOfBirth) AS Days
+FROM customers;
+
+
+-- Comparison Functions
+-- Categorize customers as Adult or Young based on their birth year.
+
+SELECT 
+    FirstName,
+    DateOfBirth,
+    IF(YEAR(DateOfBirth) <= 1995,
+        'Adult',
+        'Young') AS Category
+FROM
+    customers;
+    
+-- Display 'Not Available' if a phone number is NULL.
+
+SELECT 
+    FirstName, IFNULL(Phone, 'Not Available') AS PhoneNumber
+FROM
+    Customers;
+    
+    -- Find the latest birth date.
+    
+    SELECT GREATEST(
+'2000-09-20',
+'1995-06-18',
+'1997-09-12',
+'1993-11-25'
+) AS LatestBirthDate;
+
+-- Find the earliest birth date.
+
+SELECT LEAST(
+'2000-09-20',
+'1995-06-18',
+'1997-09-12',
+'1993-11-25'
+) AS EarliestBirthDate;
+
+-- Compare two customer names.
+
+SELECT
+    FirstName,
+    NULLIF(FirstName,'Priya') AS Result
+FROM Customers;
+
+
+-- 5)aggregate functions
+
+-- Calculate the total balance maintained across all customer accounts.
+
+select sum(balance) as total_balance from Accounts;
+
+-- Calculate the average balance maintained across all customer accounts to understand the typical amount held by customers.
+
+SELECT AVG(Balance) AS average_balance
+FROM Accounts;
+
+
+-- Identify the highest balance maintained in any customer account.
+
+SELECT MAX(Balance) AS highest_balance
+FROM Accounts;
+
+-- Identify the lowest balance maintained in any customer account.
+
+SELECT MIN(Balance) AS lowest_balance
+FROM Accounts;
+
+-- Determine the total number of customer accounts available in the system.
+
+SELECT COUNT(*) AS total_accounts
+FROM Accounts;
+
+-- Q1).The bank wants to calculate the total account balance for each AccountType by 
+-- grouping the records based on AccountType and 
+-- identify which account type is attracting the highest total deposits from customers
+
+SELECT 
+    AccountType,
+    SUM(Balance) AS TotalBalance
+FROM Accounts
+GROUP BY AccountType;
+
+-- The bank management wants to identify only those account types whose total customer deposits exceed ₹25,000.
+
+SELECT 
+    AccountType,
+    SUM(Balance) AS TotalBalance
+FROM Accounts
+GROUP BY AccountType
+HAVING SUM(Balance) > 25000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
 
 
 
