@@ -704,13 +704,65 @@ FROM Loans;
 
 
 
+use banking;
+-- 1) Introduction to Joins
+-- 2) Types of Joins
+-- 3) INNER JOIN
+-- 4) LEFT JOIN
 
+desc accounts;
+desc transactions;
 
+select * from accounts;
+select* from transactions;
 
+SELECT
+    a.AccountID, a.AccountType, a.Balance,
+    t.TransactionID,
+    t.TransactionDate,
+    t.TransactionType,
+    t.Amount
+FROM Accounts a
+INNER JOIN Transactions t
+ON a.AccountID = t.AccountID;
 
+-- Display All Accounts Including Those Without Transactions  ---(LEFT Join)
+SELECT
+    a.AccountID, a.AccountType, a.Balance,
+    t.TransactionID,
+    t.TransactionDate,
+    t.TransactionType,
+    t.Amount
+FROM Accounts a
+LEFT JOIN Transactions t
+ON a.AccountID = t.AccountID;
 
+-- Generate Deposit Transaction Reports --- (INNER Join)
 
+SELECT
+    a.AccountID, a.AccountType, a.Balance,
+    t.TransactionID,
+    t.TransactionDate,
+    t.TransactionType,
+    t.Amount
+FROM Accounts a
+INNER JOIN Transactions t
+ON a.AccountID = t.AccountID
+WHERE t.TransactionType = 'Deposit';
 
+-- Generate High Balance Account Transaction Reports
+
+SELECT
+    a.AccountID, a.AccountType, a.Balance,
+    t.TransactionID,
+    t.TransactionDate,
+    t.TransactionType,
+    t.Amount
+FROM Accounts a
+INNER JOIN Transactions t
+ON a.AccountID = t.AccountID
+WHERE a.Balance > 30000
+ORDER BY a.Balance DESC;
 
 
 
