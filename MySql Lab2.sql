@@ -765,6 +765,75 @@ WHERE a.Balance > 30000
 ORDER BY a.Balance DESC;
 
 
+-- Types of Subqueries
+-- 1).Single-Row Subquery
+-- 2)Multi-Row Subquery
+-- 3)Correlated Subquery
+-- 4)Nested Subquery
+
+-- 1)A Single-Row Subquery-- returns only one value.
+-- 2)The outer query uses this single value for comparison.
+
+-- Example
+
+SELECT AVG(Amount)
+FROM Transactions;
+
+SELECT *
+FROM Transactions
+WHERE Amount >
+(
+    SELECT AVG(Amount)
+    FROM Transactions
+);
+
+
+SELECT
+    AccountID,
+    AccountType,
+    Balance,
+    CustomerID
+FROM Accounts
+WHERE Balance >
+(
+    SELECT AVG(Balance)
+    FROM Accounts
+)
+ORDER BY Balance DESC;
+
+-- What is a Multi-Row Subquery?
+-- 1)A Multi-Row Subquery returns more than one value.
+-- Since multiple values are returned, operators such as IN, ANY, or ALL are commonly used.
+
+SELECT
+    AccountID,
+    AccountType,
+    Balance,
+    CustomerID
+FROM Accounts
+WHERE AccountID IN
+(
+    SELECT AccountID
+    FROM Transactions
+    WHERE TransactionType = 'Deposit'
+);
+
+ -- Identify the Account with the Highest Balance
+ 
+SELECT
+    AccountID,
+    AccountType,
+    Balance,
+    CustomerID
+FROM Accounts
+WHERE Balance =
+(
+    SELECT MAX(Balance)
+    FROM Accounts
+);
+
+
+
 
 
 
